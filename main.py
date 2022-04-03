@@ -1,4 +1,5 @@
 
+from pydoc import describe
 from flask import Flask, render_template, request, redirect,flash
 import mysql.connector,hashlib
 import email
@@ -17,16 +18,17 @@ cursor=db.cursor(dictionary=True)
 
 
 
-def guardar(nombre,email,email2,contra):
+def guardar(nombre,email,email2,contra,descripcion):
     print(nombre)
     print(email)
-    print(email2)
+    #print(email2)
     print(contra)
+    print(descripcion)
     
 
     contra_Encripted = hashlib.sha256(contra.encode())
     print(contra_Encripted.hexdigest())
-    cursor.execute('''INSERT INTO clientes(nombre,email,contraseña) VALUES (%s,%s,%s); ''',(nombre,email,str(contra_Encripted.hexdigest())))
+    cursor.execute("INSERT INTO clientes(nombre,email,contraseña,descripcion) VALUES (%s,%s,%s,%s)",(nombre,email,str(contra_Encripted.hexdigest(),descripcion)))
     db.commit()
     cursor.close()
     flash("Correo no concuerda")
@@ -51,6 +53,7 @@ app.secret_key="jhon"
 @app.get("/")
 def inicio():
     return render_template("index.html")
+
 @app.post("/registro")
 def registro():
    data=request.form
@@ -75,6 +78,7 @@ def registro():
            email=data["email"],
            email2=data["email2"],
            contra=data["contra"])
+           
    else:
        flash("es incorrecto")
        print("es incorrecto")

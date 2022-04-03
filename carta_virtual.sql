@@ -24,6 +24,7 @@ CREATE TABLE `clientes` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
+  `descripcion` varchar(255) NOT NULL,
   `contrasena` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb3;
